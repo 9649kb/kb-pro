@@ -1,0 +1,35 @@
+// RÈGLES FIREBASE FIRESTORE – KB PRO
+// Colle ces règles dans Firebase Console → Firestore → Règles
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Clients : lecture/écriture selon le rôle
+    match /clients/{clientId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Agents : tout le monde peut lire (pour login), seul patron peut écrire
+    match /agents/{agentId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Dépenses
+    match /depenses/{depId} {
+      allow read, write: if true;
+    }
+
+    // Messages officiels
+    match /messages/{msgId} {
+      allow read, write: if true;
+    }
+
+    // Discussion générale
+    match /chat/{chatId} {
+      allow read, write: if true;
+    }
+  }
+}
