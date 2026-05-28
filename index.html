@@ -1213,7 +1213,7 @@ window.downloadRecu=function(id){
   // REF + DATE
   pdf.setFontSize(8);pdf.setFont('helvetica','normal');pdf.setTextColor(80,80,80);
   pdf.text('Ref : '+(c.ref||'-'),10,53);
-  pdf.text('N Recu : '+recuNum,10,59);
+  pdf.text('N°Reçu : '+recuNum,10,59);
   pdf.text('Date : '+(c.dateVisite||new Date().toLocaleDateString('fr-FR')),W-10,53,{align:'right'});
   pdf.text('Agent : '+(c.agentName||'-'),W-10,59,{align:'right'});
 
