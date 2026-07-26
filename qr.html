@@ -51,7 +51,9 @@ async function run(){
     var c=q.content||{};
     if(q.type==='lien'&&c.url){
       var url=c.url.match(/^https?:\/\//)?c.url:'https://'+c.url;
-      window.location.replace(url);
+      var w=window.open(url,'_blank');
+      if(!w){window.location.replace(url);}
+      else{try{window.close();}catch(e){}}
       return;
     }
     if(q.type==='whatsapp'&&c.tel){
