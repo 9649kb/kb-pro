@@ -56,7 +56,8 @@ async function run(){
     }
     if(q.type==='whatsapp'&&c.tel){
       var tel=c.tel.replace(/[\s\-()]/g,'').replace('+','');
-      window.location.replace('https://wa.me/'+tel+(c.msg?'?text='+encodeURIComponent(c.msg):''));
+      var waUrl='https://wa.me/'+tel+(c.msg?'?text='+encodeURIComponent(c.msg):'');
+      showBox('<h1>💬 WhatsApp</h1><p>Appuie sur le bouton pour démarrer la discussion</p><a class="btn" style="font-size:16px;padding:16px 32px" href="'+waUrl+'">Ouvrir WhatsApp</a>');
       return;
     }
     if(q.type==='vcard'){
