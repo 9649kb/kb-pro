@@ -51,9 +51,7 @@ async function run(){
     var c=q.content||{};
     if(q.type==='lien'&&c.url){
       var url=c.url.match(/^https?:\/\//)?c.url:'https://'+c.url;
-      var w=window.open(url,'_blank');
-      if(!w){window.location.replace(url);}
-      else{try{window.close();}catch(e){}}
+      showBox('<h1>🔗 Lien</h1><p>Appuie pour continuer</p><a class="btn" style="font-size:16px;padding:16px 32px" href="'+url+'" target="_blank" rel="noopener">Continuer</a>');
       return;
     }
     if(q.type==='whatsapp'&&c.tel){
