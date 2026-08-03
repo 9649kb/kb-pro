@@ -26,6 +26,22 @@ function showError(title,msg){
   showBox('<h1>'+title+'</h1><p>'+msg+'</p><a class="btn" href="/">Aller sur le site KB Pro</a>');
 }
 
+function detectDevice(){
+  var ua=navigator.userAgent||'';
+  if(/tablet|ipad/i.test(ua))return'Tablette';
+  if(/mobile|android|iphone/i.test(ua))return'Téléphone';
+  return'Ordinateur';
+}
+async function logScan(code){
+  var entry={code:code,device:detectDevice(),createdAt:new Date().toISOString()};
+  try{
+    var geo=await fetch('https://ipapi.co/json/').then(function(r){return r.json();});
+    if(geo&&geo.city){entry.city=geo.city;entry.country=geo.country_name||'';}
+  }catch(e){}
+  try{
+    await firebase.firestore().collection('qr_scans').add(entry);
+  }catch(e){}
+}
 async function run(){
   var params=new URLSearchParams(window.location.search);
   var code=params.get('qr');
@@ -44,6 +60,7 @@ async function run(){
     }
     var q=snap.data();
     ref.update({scans:(q.scans||0)+1,lastScan:new Date().toISOString()}).catch(function(){});
+    logScan(code);
     if(!q.actif){
       showError('⏸ Indisponible','Ce QR a été désactivé temporairement.');
       return;
